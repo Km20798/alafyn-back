@@ -5,11 +5,14 @@ import com.karim.model.User;
 import com.karim.services.OrderService;
 import com.karim.services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -66,5 +69,28 @@ public class OrderController {
         return new ResponseEntity<Order>(order , HttpStatus.OK);
     }
 
+//-------------------------------------- find By User And Date -------------------
+    @GetMapping("/orders/{email}/{from}/{to}")
+    public ResponseEntity<List<Order>> findByTime(@PathVariable String email , @PathVariable String from , @PathVariable String to)throws Exception{
+        User user = userServices.findByEmail(email);
+        if(user == null)
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        List<Order> orders = orderService.findByUser(user);
+        if(orders.isEmpty())
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        List<Order> orderTimes = new ArrayList<>();
+        for (Order order:orders) {
+            if(
+                    (new SimpleDateFormat("yyyy-MM-dd").parse(order.getTime().toString()).after(new SimpleDateFormat("yyyy-MM-dd").parse(from)) ||
+                    new SimpleDateFormat("yyyy-MM-dd").parse(order.getTime().toString()).equals(new SimpleDateFormat("yyyy-MM-dd").parse(from)))&&
+                            (new SimpleDateFormat("yyyy-MM-dd").parse(order.getTime().toString()).before(new SimpleDateFormat("yyyy-MM-dd").parse(to)) ||
+                                    new SimpleDateFormat("yyyy-MM-dd").parse(order.getTime().toString()).equals(new SimpleDateFormat("yyyy-MM-dd").parse(to)))
+            ){
+
+                orderTimes.add(order);
+            }
+        }
+        return new ResponseEntity<List<Order>>(orderTimes , HttpStatus.OK);
+    }
 
 }

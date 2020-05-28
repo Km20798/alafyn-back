@@ -5,7 +5,6 @@ import com.karim.model.Order;
 import com.karim.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -31,4 +30,8 @@ public class OrderService {
     public List<Order> findByUser(User user){
         return repo.findByUser(user);
     }
+
+//    public List<Order> findByTime(Date from , Date to){
+//        return repo.findAllByTimeBetween(from , to);
+//    }
 }
