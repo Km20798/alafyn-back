@@ -25,7 +25,8 @@ public class SpringSecurityConfigration extends WebSecurityConfigurerAdapter {
     }
 
     private final String[] PUBLIC_ENDPOINTS = {
-            "/users/**" , "/messages" , "/users/reg" , "/sigin" , "/sendMail" , "/upload" , "/get/**" , "/orders/**"
+            "/users/**" , "/messages" , "/users/reg" , "/sigin" , "/sendMail" ,
+            "/upload" , "/get/**" , "/deleteImage/**" , "/orders/**" , "/chat/**" , "/cars/**"
     };
 
     @Bean

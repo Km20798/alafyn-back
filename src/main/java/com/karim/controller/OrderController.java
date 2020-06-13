@@ -86,11 +86,42 @@ public class OrderController {
                             (new SimpleDateFormat("yyyy-MM-dd").parse(order.getTime().toString()).before(new SimpleDateFormat("yyyy-MM-dd").parse(to)) ||
                                     new SimpleDateFormat("yyyy-MM-dd").parse(order.getTime().toString()).equals(new SimpleDateFormat("yyyy-MM-dd").parse(to)))
             ){
-
                 orderTimes.add(order);
             }
         }
         return new ResponseEntity<List<Order>>(orderTimes , HttpStatus.OK);
     }
 
+//---------------------------------------------- update order ----------------------------------------------
+    @PutMapping("/orders/{id}")
+    public ResponseEntity<Order> updateOrder(@PathVariable long id , @RequestBody Order updateOrder){
+        Order order = orderService.findById(id);
+        if(order == null)
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        System.out.println(updateOrder.getCompany());
+        orderService.updateOrder(id , updateOrder);
+        System.out.println(updateOrder.getCompany());
+        return new ResponseEntity<Order>(order , HttpStatus.OK);
+    }
+
+//---------------------------------------------- Delete Order ----------------------------------------------
+    @DeleteMapping("/orders/{id}")
+    public ResponseEntity<?> deleteOrder(@PathVariable long id){
+        Order order = orderService.findById(id);
+        if(order == null)
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        orderService.deleteOrder(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+//--------------------------------------------- find by company ---------------------------------------
+    @GetMapping("/orders/stores/{email}")
+    public ResponseEntity<List<Order>> findByCompany(@PathVariable String email){
+        List<Order> orders = orderService.findByCompany(email);
+        if(orders.isEmpty())
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<List<Order>>(orders , HttpStatus.OK);
+    }
+
+//----------------------------------------------------------------------
 }

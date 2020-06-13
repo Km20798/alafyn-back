@@ -27,8 +27,14 @@ public class init implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        createMessage();
-        createUser();
+
+    }
+
+    public void createAdmin(){
+        Address address = new Address( "Gharbia" , "El Santa" , "Meet Haway El Santa Gharbia");
+        User user = new User("Admin" , "admin@gmail.com" , "01012856931" , "admin123" , address);
+        user.setRole("ROLE_ADMIN");
+        userServices.createUser(user);
     }
 
     public void createMessage(){
@@ -47,7 +53,7 @@ public class init implements CommandLineRunner {
         User mustafa = new User("Mustafa Mohamed" , "mostafa@gmail.com" , "01012056931" , "mustafa123" , address);
         mustafa.setRole("ROLE_STORE");
         userServices.createUser(mustafa);
-        Order order = new Order("delivery" , "jumbo" , "tanta" , "01117631429" , "my order " , "karim" , "santa" , "cash" , new Date("20/7/2020"), user);
+        Order order = new Order("delivery" , "jumbo" , "tanta" , "01117631429" , "my order " , "karim" , "santa" , "cash" , new Date("20/7/2020"), 2 , user);
         order.setPrice(2000);
         order.setCode(1287);
         orderService.SaveOrder(order);

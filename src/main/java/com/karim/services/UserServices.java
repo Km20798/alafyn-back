@@ -48,6 +48,7 @@ public class UserServices {
         return repo.findByEmail(email);
     }
 
+
     public User findByEmail(String email){
         return repo.findByEmail(email);
     }
@@ -60,8 +61,8 @@ public class UserServices {
         return repo.findByPhone(phone);
     }
 
-    public void deleteByEmail(String email){
-        repo.deleteByEmail(email);
+    public void deleteByEmail(long id){
+        repo.deleteById(id);
     }
 
     public void deleteAll(){

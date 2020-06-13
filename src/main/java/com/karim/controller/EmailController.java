@@ -13,8 +13,8 @@ import java.util.Properties;
 @RestController
 public class EmailController {
 
-    private String username = "kmaged207@gmail.com";
-    private String password = "karimmaged20798";
+    private String username = "3lafn207@gmail.com";
+    private String password = "kmaged207";
 
 //-------------------------- Send Email ---------------------------
     @PostMapping("/sendMail")

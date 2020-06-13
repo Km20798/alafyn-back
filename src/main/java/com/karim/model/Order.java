@@ -38,6 +38,14 @@ public class Order {
     @Temporal(TemporalType.DATE)
     private Date time ;
 
+    private int car ;
+
+    private boolean ok ;
+
+    private String company ;
+
+    private boolean done ;
+
     @ManyToOne
     private User user ;
 
@@ -48,7 +56,7 @@ public class Order {
     }
 
     public Order(String delivery_method , String vehicle_type , String pickup_Location ,
-                 String mobile , String description , String client_name , String address , String payment_method , Date time  , User user) {
+                 String mobile , String description , String client_name , String address , String payment_method , Date time , int car , User user) {
         this.delivery_method = delivery_method ;
         this.vehicle_type = vehicle_type ;
         this.pickup_Location = pickup_Location ;
@@ -58,6 +66,8 @@ public class Order {
         this.address = address;
         this.payment_method = payment_method ;
         this.time = time ;
+        this.car = car ;
+        this.ok = false ;
         this.user = user ;
     }
 
@@ -160,6 +170,38 @@ public class Order {
         this.time = time;
     }
 
+    public int getCar() {
+        return car;
+    }
+
+    public void setCar(int car) {
+        this.car = car;
+    }
+
+    public boolean isOk() {
+        return ok;
+    }
+
+    public void setOk(boolean ok) {
+        this.ok = ok;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public boolean isDone() {
+        return done;
+    }
+
+    public void setDone(boolean done) {
+        this.done = done;
+    }
+
     public User getUser() {
         return user;
     }
@@ -167,6 +209,7 @@ public class Order {
     public void setUser(User user) {
         this.user = user;
     }
+
     //----------------------ToString---------------------------
     @Override
     public String toString() {
@@ -176,12 +219,17 @@ public class Order {
                 ", vehicle_type='" + vehicle_type + '\'' +
                 ", pickup_Location='" + pickup_Location + '\'' +
                 ", mobile='" + mobile + '\'' +
+                ", discription='" + discription + '\'' +
                 ", client_name='" + client_name + '\'' +
                 ", address='" + address + '\'' +
                 ", price=" + price +
                 ", code=" + code +
                 ", payment_method='" + payment_method + '\'' +
                 ", time=" + time +
+                ", car=" + car +
+                ", ok=" + ok +
+                ", company='" + company + '\'' +
+                ", done=" + done +
                 ", user=" + user +
                 '}';
     }

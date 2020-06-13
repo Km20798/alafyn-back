@@ -60,8 +60,11 @@ public class UserController {
     @GetMapping("/users/{email}")
     public ResponseEntity<User> getUserById(@PathVariable String email) {
         User user = userServices.findByEmail(email);
-        if (user == null)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (user == null) {
+            user = userServices.findByPhone("email");
+            if (user == null)
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
@@ -94,7 +97,7 @@ public class UserController {
         User user = userServices.getUser(email);
         if (user == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        userServices.deleteByEmail(email);
+        userServices.deleteByEmail(user.getId());
         return new ResponseEntity<User>(HttpStatus.OK);
     }
 
@@ -129,4 +132,5 @@ public class UserController {
         return new ResponseEntity<List<User>>(users , HttpStatus.OK);
     }
 
+    //-----------------------------------------------------------------------------------------
 }
