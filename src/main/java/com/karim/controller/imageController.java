@@ -14,17 +14,19 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
-
+//----------------- Anotations -----------------------
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
+// ---------------- Start Controller -----------------
 public class imageController {
 
+	// ------------------ Attributes -----------------
     @Autowired
     private ImagRepo repo;
     @Autowired
     private ImageService imageService;
 
-//------------------------------ Upload Image ---------------------------------
+    //-------------------- Upload Image ---------------
     @PostMapping(value = "/upload")
     public ResponseEntity<Image> uploadImage(@RequestParam("imageFile") MultipartFile file) throws IOException {
         Image image= new Image(file.getOriginalFilename() , file.getContentType() , file.getBytes());
@@ -32,7 +34,7 @@ public class imageController {
         return new ResponseEntity<Image>(image , HttpStatus.OK);
     }
 
-//---------------------------------- get Image -------------------------------
+    // -------------------- get Image -----------------
     @GetMapping("/get/{imageName}")
     public ResponseEntity<Image> getImage(@PathVariable String imageName){
         Image image = null ;
@@ -45,7 +47,7 @@ public class imageController {
         return new ResponseEntity<Image>(image , HttpStatus.OK);
     }
 
-//--------------------------------------------- Delete Image -------------------------
+    // ------------------ Delete Image ------------------
     @DeleteMapping("/deleteImage/{name}")
     public ResponseEntity<?>  deleteImage( @PathVariable String name){
         Optional<Image> myimage = repo.findByName(name);
@@ -55,4 +57,5 @@ public class imageController {
         repo.delete(image);
         return new ResponseEntity<>( HttpStatus.OK);
     }
+    // ------------------- End Controller ---------------
 }

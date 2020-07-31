@@ -16,16 +16,19 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+// ------------------ Annotations ---------------------------------------
 @CrossOrigin(origins = "http://localhost:4200")
 @Controller
+// ----------------- Start Controller -----------------------------------
 public class OrderController {
 
+	// --------------------- Attributes ---------------------------------	
     @Autowired
     private OrderService orderService ;
     @Autowired
     private UserServices userServices ;
 
-//-------------------------- getAllOrders -------------------------------
+    //-------------------------- getAllOrders ---------------------------
     @GetMapping("orders")
     public ResponseEntity<List<Order>> getAllOrders(){
         List<Order> orders = orderService.getAllOrders();
@@ -34,7 +37,7 @@ public class OrderController {
         return new ResponseEntity<List<Order>>(orders , HttpStatus.OK);
     }
 
-//--------------------------------- findOrderByCode ---------------------------
+    //------------------------ findOrderByCode ---------------------------
     @GetMapping("/orders/{email}/{code}")
     public ResponseEntity<Order> getOrder(@PathVariable long code , @PathVariable String email){
         Order order = orderService.findByCode(code);
@@ -46,7 +49,7 @@ public class OrderController {
         return new ResponseEntity<Order>(order , HttpStatus.OK);
     }
 
-//---------------------------------- get Orders For User -----------------------
+    //------------------------ get Orders For User -----------------------
     @GetMapping("orders/{email}")
     public ResponseEntity<List<Order>> getOrder(@PathVariable String email) {
         User user = userServices.findByEmail(email);
@@ -56,7 +59,7 @@ public class OrderController {
         return new ResponseEntity<List<Order>>(orders , HttpStatus.OK);
     }
 
-//----------------------------- add new Order ---------------------------------
+    //---------------------- add new Order --------------------------------
     @PostMapping("/orders/{email}")
     public ResponseEntity<Order> getOrder(@RequestBody Order order , @PathVariable String email){
         User user = userServices.findByEmail(email);
@@ -69,7 +72,7 @@ public class OrderController {
         return new ResponseEntity<Order>(order , HttpStatus.OK);
     }
 
-//-------------------------------------- find By User And Date -------------------
+    //--------------------------- find By User And Date --------------------
     @GetMapping("/orders/{email}/{from}/{to}")
     public ResponseEntity<List<Order>> findByTime(@PathVariable String email , @PathVariable String from , @PathVariable String to)throws Exception{
         User user = userServices.findByEmail(email);
@@ -92,7 +95,7 @@ public class OrderController {
         return new ResponseEntity<List<Order>>(orderTimes , HttpStatus.OK);
     }
 
-//---------------------------------------------- update order ----------------------------------------------
+    //--------------------------- update order --------------------------------
     @PutMapping("/orders/{id}")
     public ResponseEntity<Order> updateOrder(@PathVariable long id , @RequestBody Order updateOrder){
         Order order = orderService.findById(id);
@@ -104,7 +107,7 @@ public class OrderController {
         return new ResponseEntity<Order>(order , HttpStatus.OK);
     }
 
-//---------------------------------------------- Delete Order ----------------------------------------------
+    //---------------------------- Delete Order ---------------------------------
     @DeleteMapping("/orders/{id}")
     public ResponseEntity<?> deleteOrder(@PathVariable long id){
         Order order = orderService.findById(id);
@@ -114,7 +117,7 @@ public class OrderController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-//--------------------------------------------- find by company ---------------------------------------
+    //--------------------------- find by company ---------------------------------
     @GetMapping("/orders/stores/{email}")
     public ResponseEntity<List<Order>> findByCompany(@PathVariable String email){
         List<Order> orders = orderService.findByCompany(email);
@@ -123,5 +126,5 @@ public class OrderController {
         return new ResponseEntity<List<Order>>(orders , HttpStatus.OK);
     }
 
-//----------------------------------------------------------------------
+    //--------------------------- End Controller -----------------------------------
 }

@@ -19,10 +19,13 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+// -------------------- Annotations --------------------
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
+// -------------------- Start Controller ---------------
 public class UserController {
 
+	//------------------ Attributes --------------------
     @Autowired
     private TokenUtil tokenUtil ;
     @Autowired
@@ -34,7 +37,7 @@ public class UserController {
     @Autowired
     private UserDetail service ;
 
-    //----------------------signin to get token --------------------------------
+    //-----------------signin to get token --------------
         @PostMapping("/sigin")
         public JwtResponse signin(@RequestBody signinRequest request){
             final Authentication authentication = authenticationManager.authenticate(
@@ -44,10 +47,12 @@ public class UserController {
             UserDetails userDetails = service.loadUserByUsername(request.getUsername());
             String token = tokenUtil.generateToken(userDetails);
             JwtResponse jwtResponse = new JwtResponse(token);
+            if(jwtResponse == null)
+            	return null;
             return jwtResponse;
         }
 
-    //---------------------- Get All Users ------------------------
+    //----------------- Get All Users -------------------
     @GetMapping("/users")
     public ResponseEntity<List<User>> getAllUser() {
         List<User> users = userServices.getAllUser();
@@ -68,7 +73,7 @@ public class UserController {
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
-    //---------------------- Create new User ----------------------
+    //--------------------------- Create new User ----------------------
     @PostMapping("/users/reg")
     public ResponseEntity<User> getUserById(@Valid @RequestBody User user) {
         User sbe = userServices.findByEmail(user.getEmail());
@@ -81,7 +86,7 @@ public class UserController {
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
-    //---------------------- update User By Id ---------------------
+    //---------------------------- update User By Id ---------------------
     @PutMapping("/users/{email}")
     public ResponseEntity<User> updateUserById(@PathVariable String email , @Valid @RequestBody User user) {
         User currentUser = userServices.getUser(email);
@@ -91,7 +96,7 @@ public class UserController {
         return new ResponseEntity<User>(userServices.getUser(email), HttpStatus.OK);
     }
 
-    //----------------------- delete User By Id -----------------------
+    //----------------------- delete User By Id ---------------------------
     @DeleteMapping("/users/{email}")
     public ResponseEntity<?> deleteUserById(@PathVariable String email ) {
         User user = userServices.getUser(email);
@@ -101,7 +106,7 @@ public class UserController {
         return new ResponseEntity<User>(HttpStatus.OK);
     }
 
-    //------------------------ delete All User ------------------------
+    //------------------------ delete All User -----------------------------
     @DeleteMapping("/users")
     public ResponseEntity<?> deleteAllUser() {
         List<User> users = userServices.getAllUser();
@@ -111,7 +116,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    //----------------------- Login By Email and Password ----------------
+    //----------------------- Login By Email and Password -------------------
     @GetMapping("/users/{email}/{password}")
     public ResponseEntity<User> findByEmailAndPassword(@PathVariable String email , @PathVariable String password){
         User user = userServices.findByEmailAndPassword(email , password);
@@ -123,7 +128,7 @@ public class UserController {
         return new ResponseEntity<User>(user , HttpStatus.OK);
     }
 
-    //----------------------------------- Find User By Place and Role-------------------------
+    //--------------------- Find User By Place and Role-----------------------
     @GetMapping("/users/store/{country}")
     public ResponseEntity<List<User>> findByRoleAndCountry(@PathVariable String country){
         List<User> users = userServices.findByRoleAndCountry(country);
@@ -132,5 +137,5 @@ public class UserController {
         return new ResponseEntity<List<User>>(users , HttpStatus.OK);
     }
 
-    //-----------------------------------------------------------------------------------------
+    //------------------------------------ End Controller ---------------------
 }

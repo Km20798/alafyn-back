@@ -8,22 +8,24 @@ import javax.mail.internet.*;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Properties;
-
+//----------------- Anotations -----------------------
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
+//----------------- Start Controller ------------------
 public class EmailController {
 
+	// ----------------- Attributes --------------------
     private String username = "3lafn207@gmail.com";
     private String password = "kmaged207";
 
-//-------------------------- Send Email ---------------------------
+    // ----------------- Send Email --------------------
     @PostMapping("/sendMail")
     public String sendEmail( @RequestBody Email email)throws AddressException , MessagingException , IOException{
         sendMail(email);
         return "email sent successfully";
     }
 
-//--------------------------- info of send email
+    // -------------- info of send email ----------------
     private void sendMail(Email email)throws AddressException , MessagingException , IOException {
         Properties properties = new Properties();
         properties.put("mail.smtp.auth" , "true");
@@ -47,5 +49,5 @@ public class EmailController {
 
         Transport.send(msg);
     }
-
+ // ----------------- End Controller -----------------------
 }

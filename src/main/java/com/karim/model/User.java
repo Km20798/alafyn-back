@@ -26,6 +26,8 @@ public class User {
     private String role ;
 
     private int active ;
+    
+    private boolean card ;
 
     //--------------------- Constructors -----------------
     public User() {
@@ -105,8 +107,16 @@ public class User {
     public void setActive(int active) {
         this.active = active;
     }
+    
+    public boolean isCard() {
+		return card;
+	}
 
-    //----------------------- toString -------------------
+	public void setCard(boolean card) {
+		this.card = card;
+	}
+
+	//----------------------- toString -------------------
     @Override
     public String toString() {
         return "User{" +

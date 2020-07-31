@@ -9,15 +9,18 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+// ------------------------ Anotations --------------------
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/messages")
+// ------------------------- Start Controller -------------
 public class MessageController {
 
+	// ----------------- Attributes -----------------------	
     @Autowired
     private MessageService messageService ;
 
-    //----------------- Get All Messages ------------------
+    // ----------------- Get All Messages ------------------
     @GetMapping
     public ResponseEntity<List<Message>> getAllMessage(){
         List<Message> messages = messageService.getMessages();
@@ -35,14 +38,14 @@ public class MessageController {
         return new ResponseEntity<Message>(message , HttpStatus.OK);
     }
 
-    //---------------------- Create new Message ------------------
+    // ---------------------- Create new Message ------------------
     @PostMapping
     public ResponseEntity<Message> createMessage(@Valid @RequestBody Message message){
         messageService.addMessage(message);
         return new ResponseEntity<Message>(message , HttpStatus.OK);
     }
 
-    //--------------------- update Message by id --------------------
+    // --------------------- update Message by id --------------------
     @PutMapping("/{id}")
     public ResponseEntity<Message> updateMessage(@PathVariable long id , @Valid @RequestBody Message message){
         Message currentMessage = messageService.getMessage(id);
@@ -56,14 +59,14 @@ public class MessageController {
         return new ResponseEntity<Message>(currentMessage , HttpStatus.OK);
     }
 
-    //--------------------- delete Message by id ---------------
+    // --------------------- delete Message by id ---------------
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteMessage(@PathVariable long id){
         messageService.deleteMessage(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    //--------------------- delete All Messages -----------------
+    // --------------------- delete All Messages -----------------
     @DeleteMapping
     public ResponseEntity<?> deleteAllMessage(){
         List<Message> messages = messageService.getMessages();
@@ -72,7 +75,5 @@ public class MessageController {
         messageService.deleteAll();
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
-
-
+    // -------------------------- End Controller ------------------
 }

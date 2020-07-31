@@ -10,17 +10,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+//----------------- Anotations -----------------------
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
+//----------------- Start Controller -----------------
 public class CarController {
 
+	// ----------------- Attributes ------------------
     @Autowired
     private CarService carService ;
     @Autowired
     private UserServices userServices ;
 
-//-----------------------------------------    get All Car for User     -------------------------
+    //------------- get All Car for User ---------------
     @GetMapping("/cars/{email}")
     public ResponseEntity<List<Car>> getAllCarForUser(@PathVariable String email){
         User user = userServices.findByEmail(email);
@@ -32,7 +34,7 @@ public class CarController {
         return new ResponseEntity<List<Car>>(cars , HttpStatus.OK);
     }
 
-//----------------------------------------   Get Car By Id    ----------------------------------
+    // --------------------- Get Car By Id --------------
     @GetMapping("/cars/{email}/{id}")
     public ResponseEntity<Car> findCarById(@PathVariable String email , @PathVariable long id){
         User user = userServices.findByEmail(email);
@@ -44,14 +46,14 @@ public class CarController {
         return new ResponseEntity<Car>(car , HttpStatus.OK);
     }
 
-//----------------------------------------    Add New Car     ----------------------------------
+    //--------------------- Add New Car ---------------
     @PostMapping("/cars")
     public ResponseEntity<Car> addCar(@RequestBody Car car){
         carService.addCar(car);
         return new ResponseEntity<Car>(car , HttpStatus.OK);
     }
 
-//---------------------------------------    deleteById       ------------------------------------
+    //----------------- deleteById ----------------------
     @DeleteMapping("/cars/{id}")
     public ResponseEntity<?> deleteById(@PathVariable long id){
         Car car = carService.getCar(id);
@@ -60,4 +62,5 @@ public class CarController {
         carService.deleteCar(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    // ----------------- End Controller -------------------
 }

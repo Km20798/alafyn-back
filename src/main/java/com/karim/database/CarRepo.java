@@ -8,5 +8,6 @@ import java.util.List;
 
 @Repository
 public interface CarRepo extends JpaRepository<Car , Long>{
+	// find Cars By User	
     List<Car> findByUser(User user);
 }

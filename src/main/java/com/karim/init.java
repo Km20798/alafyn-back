@@ -27,7 +27,7 @@ public class init implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-
+//    	createAdmin();
     }
 
     public void createAdmin(){
